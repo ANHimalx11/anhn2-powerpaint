@@ -1,0 +1,368 @@
+/*
+ * Anh Nguyen 
+ * TCSS305C - Winter 
+ * Assignment 5a - Power Paint 
+ * PowerPaintGUI.java
+ * This class contains all the necessary components to create the GUI for
+ * PowerPaint.
+ * 
+ */
+
+package gui;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+
+
+import javax.swing.Action;
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JColorChooser;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JSlider;
+import javax.swing.JToggleButton;
+import javax.swing.JToolBar;
+import javax.swing.SwingConstants;
+
+/**
+ * This is the GUI constructor class that will provide components for the Power
+ * Paint application.
+ * 
+ * @author Anh Nguyen
+ * @version 1.3
+ *
+ */
+public class PowerPaintGUI extends JFrame {
+
+    // Class constant.
+    /**
+     * This is an auto generated serial number for PowerPaintGUI.
+     */
+    private static final long serialVersionUID = -6870003831272220140L;
+
+    /**
+     * Max thickness of shapes drawn for the slider option.
+     */
+    private static final int MAX_THICKNESS = 20;
+
+    /**
+     * The major ticking size of slider option.
+     */
+    private static final int MAJOR_TICK = 5;
+
+    /**
+     * The minor ticking size of slider option..
+     */
+    private static final int MINOR_TICK = 1;
+
+    /**
+     * Initial thickness of shapes drawn for the slider option.
+     */
+    private static final int INITIAL_THICKNESS = 5;
+    /**
+     * This is the title name of the application.
+     */
+    private static final String TITLE_NAME = "PowerPaint";
+
+    /**
+     * This is a string for the About message.
+     */
+    private static final String ABOUT_MESSAGE = "TCSS 305 PowerPaint\nWinter 2016\nAnh Nguyen";
+
+    /**
+     * A string name for the tool pencil.
+     */
+    private static final String PENCIL = "Pencil ";
+
+    /**
+     * A string name for the tool line.
+     */
+    private static final String LINE = "Line ";
+
+    /**
+     * A string name for the tool rectangle.
+     */
+    private static final String RECTANGLE = "Rectangle ";
+
+    /**
+     * A string name for the tool ellipse.
+     */
+    private static final String ELLIPSE = "Ellipse ";
+
+    /**
+     * Color UW Purple!
+     */
+    private static final Color UW_PURPLE = new Color(51, 0, 111);
+
+    // Class instance
+
+    /**
+     * A menu bar for the application.
+     */
+    private JMenuBar myMenuBar;
+
+    /**
+     * An ImageIcon for the title bar and the about clause.
+     */
+    private ImageIcon myIcon;
+
+    /**
+     * This is the constructor for PowerPaintGUI.
+     */
+    public PowerPaintGUI() {
+        super(TITLE_NAME);
+
+    }
+
+    /**
+     * This method will start off calling all necessary methods to create the
+     * PowerPaintGUI.
+     */
+    public void start() {
+
+        // setting location to center screen
+        setLocationRelativeTo(null);
+
+        // add icon to title bar.
+        myIcon = new ImageIcon("images/myGamingIcon.png");
+        setIconImage(myIcon.getImage());
+
+        // This will close our application.
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // TODO Create Button List
+        // createButtons();
+
+        // Create the Menu Bar and its contents.
+        createMenuBar();
+        createFileMenu();
+        createOptionsMenu();
+        createToolsMenu();
+        createHelpMenu();
+
+        // Create Tool Bar for application.
+        createToolBar();
+
+        // add drawing area
+        addDrawArea();
+        pack();
+        setPreferredSize(getSize());
+
+        // setting location to center screen
+        setLocationRelativeTo(null);
+
+        // Make everything visible.
+        setVisible(true);
+    }
+
+    /**
+     * This method creates a menu bar for the application.
+     */
+    private void createMenuBar() {
+        myMenuBar = new JMenuBar();
+        setJMenuBar(myMenuBar);
+    }
+
+    /**
+     * This method adds the drawing area to the application.
+     */
+    private void addDrawArea() {
+
+        final DrawingArea drawingArea = new DrawingArea();
+        add(drawingArea, BorderLayout.CENTER);
+        
+        drawingArea.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+    }
+
+    /**
+     * This method creates the contents for the File menu.
+     */
+    private void createFileMenu() {
+        final JMenu file = new JMenu("File");
+        myMenuBar.add(file);
+        file.setMnemonic(KeyEvent.VK_F);
+
+        // Create and add contents of File.
+        final JMenuItem undo = new JMenuItem("Undo");
+        undo.setEnabled(false);
+        
+        undo.setMnemonic(KeyEvent.VK_U);
+
+        final JMenuItem exit = new JMenuItem("Exit");
+        exit.setMnemonic(KeyEvent.VK_E);
+        // TODO create undo action button.
+
+        // Create actionListener when exit button is pressed.
+        exit.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(final ActionEvent theEvent) {
+                dispose();
+            }
+        });
+        // Add to GUI
+        file.add(undo);
+        file.addSeparator();
+        file.add(exit);
+    }
+
+    /**
+     * This method creates the contents for the Options menu.
+     */
+    private void createOptionsMenu() {
+        final JMenu options = new JMenu("Options");
+        myMenuBar.add(options);
+        options.setMnemonic(KeyEvent.VK_O);
+
+        // Create and add contents of Options.
+        final JCheckBoxMenuItem squaresAndCircles =
+                        new JCheckBoxMenuItem("Square/Circle Only");
+        squaresAndCircles.setMnemonic(KeyEvent.VK_S);
+
+        final JMenu subOptionThickness = new JMenu("Thickness");
+        subOptionThickness.setMnemonic(KeyEvent.VK_T);
+
+        // create JSlider for sub-menu thickness.
+
+        final JSlider degreeOfThick = new JSlider(SwingConstants.HORIZONTAL, 0, MAX_THICKNESS,
+                                                  INITIAL_THICKNESS);
+
+        degreeOfThick.setMajorTickSpacing(MAJOR_TICK);
+        degreeOfThick.setMinorTickSpacing(MINOR_TICK);
+        degreeOfThick.setPaintLabels(true);
+        degreeOfThick.setPaintTicks(true);
+
+        subOptionThickness.add(degreeOfThick);
+        // create Icon for "Color..."
+        final CustomIcon colorIcon = new CustomIcon();
+
+        // create Action listener for the icon to update its color when a new
+        // color is selected.
+//        colorIcon.paintIcon(null, getGraphics(), getX(), getY());
+        
+        final JMenuItem color = new JMenuItem("Color...", colorIcon);
+        color.setMnemonic(KeyEvent.VK_C);
+
+        // create JColorChooser
+//TODO        final JColorChooser colorChooser = new JColorChooser();
+
+        // create action button for JColorChooser
+        color.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(final ActionEvent theEvent) {
+                JColorChooser.showDialog(getParent(), "Color", UW_PURPLE);
+                
+            }
+        });
+        // Add to GUI
+        options.add(squaresAndCircles);
+        options.addSeparator();
+        options.add(subOptionThickness);
+        options.addSeparator();
+        options.add(color);
+    }
+
+    /**
+     * This method creates the contents for the Tools menu.
+     */
+    private void createToolsMenu() {
+        final JMenu tools = new JMenu("Tools");
+        myMenuBar.add(tools);
+        tools.setMnemonic(KeyEvent.VK_T);
+
+        // Create radio buttons for each tool.
+        final JMenuItem pencilMenuButton = new JRadioButtonMenuItem(PENCIL);
+        final JMenuItem lineMenuButton = new JRadioButtonMenuItem(LINE);
+        final JMenuItem rectangleMenuButton = new JRadioButtonMenuItem(RECTANGLE);
+        final JMenuItem ellipseMenuButton = new JRadioButtonMenuItem(ELLIPSE);
+
+        final ButtonGroup toolMenuGrp = new ButtonGroup();
+        toolMenuGrp.add(pencilMenuButton);
+        toolMenuGrp.add(lineMenuButton);
+        toolMenuGrp.add(rectangleMenuButton);
+        toolMenuGrp.add(ellipseMenuButton);
+
+        pencilMenuButton.setMnemonic(KeyEvent.VK_P);
+        lineMenuButton.setMnemonic(KeyEvent.VK_L);
+        rectangleMenuButton.setMnemonic(KeyEvent.VK_R);
+        ellipseMenuButton.setMnemonic(KeyEvent.VK_E);
+
+        tools.add(pencilMenuButton);
+        tools.add(lineMenuButton);
+        tools.add(rectangleMenuButton);
+        tools.add(ellipseMenuButton);
+    }
+
+    /**
+     * This method creates the contents for the Help menu.
+     */
+    private void createHelpMenu() {
+        final JMenu help = new JMenu("Help");
+        myMenuBar.add(help);
+        help.setMnemonic(KeyEvent.VK_H);
+
+        final JMenuItem about = new JMenuItem("About...");
+        about.setMnemonic(KeyEvent.VK_A);
+        help.add(about);
+
+        about.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(final ActionEvent theEvent) {
+                if (theEvent.getSource() == about) {
+                    JOptionPane.showMessageDialog(getParent(), ABOUT_MESSAGE, "About",
+                                                  JOptionPane.INFORMATION_MESSAGE, myIcon);
+                }
+            }
+        });
+    }
+
+    /**
+     * This method creates a tool bar for the application.
+     */
+    private void createToolBar() {
+        final JToolBar toolBar = new JToolBar();
+
+        final JToggleButton pencilToggle =
+                        new JToggleButton(PENCIL, new ImageIcon("images/pencil_bw.gif"), true);
+        final JToggleButton lineToggle =
+                        new JToggleButton(LINE, new ImageIcon("images/line_bw.gif"));
+        final JToggleButton rectToggle =
+                        new JToggleButton(RECTANGLE, new ImageIcon("images/rectangle_bw.gif"));
+        final JToggleButton ellipseToggle =
+                        new JToggleButton(ELLIPSE, new ImageIcon("images/ellipse_bw.gif"));
+
+        toolBar.add(pencilToggle);
+        toolBar.add(lineToggle);
+        toolBar.add(rectToggle);
+        toolBar.add(ellipseToggle);
+        
+        pencilToggle.setMnemonic(KeyEvent.VK_P);
+        lineToggle.setMnemonic(KeyEvent.VK_L);
+        rectToggle.setMnemonic(KeyEvent.VK_R);
+        ellipseToggle.setMnemonic(KeyEvent.VK_E);
+        
+        final ButtonGroup toolBarGrp = new ButtonGroup();
+
+        toolBarGrp.add(pencilToggle);
+        toolBarGrp.add(lineToggle);
+        toolBarGrp.add(rectToggle);
+        toolBarGrp.add(ellipseToggle);
+
+        add(toolBar, BorderLayout.SOUTH);
+
+    }
+
+}

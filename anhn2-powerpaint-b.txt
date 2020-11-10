@@ -1,0 +1,23 @@
+Assignment name: Assignment 5
+TCSS 305: Programming Practicum, Winter 2016
+
+Name: Anh Nguyen
+UWNetID: anhn2
+Subversion Revision Number: 32
+
+
+Assignment Overview:
+The purpose of this part of the assignment was to learn to decompose our gigantic class from part A into a more meaningful and hierarchical way. This part of the assignment was heavily emphasizing many of the topics that we have covered in class thus far. This assignment gave us a more hands on approach that allows us to actually organize our own class hierarchy. This includes creating abstract classes, interfaces, and concrete classes.
+
+
+Technical Impression:
+Going from part A to part B was difficult for me. During last week, I spent much of my time unable to stay awake from all the medicine I was taking due to getting sick. Visually, I couldn't map out my class hierarchy at first. I spent a lot of time thinking about how the classes should be laid out. I even drew out a UML chart to help me see the bigger picture. But even after having all my packages created and all my classes separated, it became even difficult for me how each object from different classes were working together. It took a lot of trial and error, comparing examples from class to get my code to where it is now. My most major road block was properly setting how to draw new shapes within my application. I was not properly setting a new reference of the shape that was being drawn, so any changes made to the current shape affected the past shapes that were drawn. I fixed this by making new reference within each tool. Other than that, creating the enhanced for loop for the buttons to sync with one another was relatively simple. I had some difficulty creating an icon for the Color menu, but that was resolved in class examples and guide from java.
+
+
+Unresolved problems in my submission:
+The draw squares and circles only has not been implemented yet. I couldn't get around passing a boolean into my tools. I also have a warning that I am importing too many import files due to having menu and tool bar in one class. 
+
+
+Questions:
+
+

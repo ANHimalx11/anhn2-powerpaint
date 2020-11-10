@@ -1,0 +1,23 @@
+Assignment name: Assignment 5a
+TCSS 305: Programming Practicum, Winter 2016
+
+Name: Anh Nguyen
+UWNetID: anhn2
+Subversion Revision Number: 31
+
+
+Assignment Overview:
+The first part of the PowerPaint assignment is to create the front end GUI for our application. We are to utilize the concepts of Java Swing components to create the specified look and feel of the application per the descriptions from the assignment document.
+
+
+Technical Impression:
+The front end of this assignment was relatively easy. The concepts we learned from our previous assignment, SnapShop, really helped to develop a better understanding of how JComponents work. Because of the previous assignment, understanding the concepts of how to create a menu with the usage of JComponents came at an ease. With that said, there were some new components we worked with to obtain the specific look and feel of the application; specifically JMenuItems, JRadioButtons, and JToggleButtons. In order to obtain the impression that only one tool is selected, we had to create a ButtonGroup so that the buttons can work in sync with one another. The other troubling concept I had in this first part of the assignment which pertains to the second part of the assignment is the structure of all the classes and packages working in sync with one another. I had a difficult time imagining how to organize my classes that pertained to the tools and buttons. Mainly because I do not have a complete understanding of how the Interface: Shape works and how it relates to the tools we will use. In the previous assignment, we had the opportunity to see how the filters worked together in sync with the buttons, so I imagine it would look similar to that hierarchy. But since this assignment was to obtain the correct GUI. I will work on that later. Applying action listeners for the line to be drawn was the most difficult part of Assignment 5a. Mainly because I do not know how to code the action events for the proper behavior of the tool. 
+
+
+Unresolved problems in my submission:
+Everything works as it should. I can draw a line, but there is a point at (0,0) from initializing the line object.
+
+
+Questions:
+The assignment 5a only requires us to finish the GUI and have the ability to draw a line. Will you deduct points off because of the point at (0,0) from initializing the line object?
+

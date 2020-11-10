@@ -1,0 +1,185 @@
+/*
+ * Anh Nguyen TCSS305C - Winter Assignment 5a - Power Paint DrawingArea.java
+ * This class will create a drawing area for the user to draw.
+ */
+
+package gui;
+
+import java.awt.Color;
+
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.event.MouseEvent;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Line2D;
+import java.awt.geom.Path2D;
+import java.awt.geom.Path2D.Float;
+import java.awt.geom.Point2D;
+
+import javax.swing.JPanel;
+import javax.swing.event.MouseInputAdapter;
+
+/**
+ * This class creates a drawing area for PowerPaint.
+ * 
+ * @author Anh Nguyen
+ * @version 1.0
+ */
+public class DrawingArea extends JPanel {
+
+    // Class constant
+
+    /**
+     * An int value representing the width for the window.
+     */
+    private static final int PREF_WIDTH = 500;
+
+    /**
+     * An int value representing the height for the window.
+     */
+    private static final int PREF_HEIGHT = 400;
+
+    /**
+     * A constant for the preferred size for the drawing area.
+     */
+    private static final Dimension PREF_SIZE = new Dimension(PREF_WIDTH, PREF_HEIGHT);
+
+    /**
+     * This is an auto-generated Serial number for DrawingArea.
+     */
+    private static final long serialVersionUID = -6299431629309349243L;
+    
+    /**
+     * This is a temporary color for the initial paint.
+     */
+    private static final Color UW_PURPLE = new Color(51, 0, 111);
+
+    // Instance fields
+    /**
+     * The path being created.
+     */
+//    private final Path2D myPencilPath;
+
+    private final Line2D myLine;
+
+    /**
+     * This is a constructor to create a drawing area.
+     */
+    public DrawingArea() {
+        super();
+        setBackground(Color.WHITE);
+        setOpaque(true);
+
+//        myPencilPath = new GeneralPath();
+        
+        myLine = new Line2D.Double();
+
+        setPreferredSize(PREF_SIZE);
+
+        setUpComponent();
+
+    }
+
+    /**
+     * This method helps to set up the mouse/listener adapter.
+     */
+    private void setUpComponent() {
+//        final MouseInputAdapter mIAPencil = new MyPencilMouseInputAdapter();
+//        addMouseListener(mIAPencil);
+//        addMouseMotionListener(mIAPencil);
+//        
+        final MouseInputAdapter mIALINE = new MyLineMouseAdapter();
+        addMouseListener(mIALINE);
+        addMouseMotionListener(mIALINE);
+    }
+
+    // Override paintComponent
+    @Override
+    public void paintComponent(final Graphics theG) {
+        super.paintComponent(theG);
+        final Graphics2D g2D = (Graphics2D) theG;
+
+        // make the drawings look better.
+        g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                             RenderingHints.VALUE_ANTIALIAS_ON);
+        
+        //setting color of paint
+        g2D.setPaint(UW_PURPLE);
+
+//        g2D.draw(myPencilPath);
+        
+        g2D.draw(myLine);
+    }
+
+//    /**
+//     * This is an inner class that is a MouseInputAdapter.
+//     * 
+//     * @author Anh Nguyen
+//     * @version 1.0
+//     */
+//    //THIS IS THE PENCIL TOOL!
+//    class MyPencilMouseInputAdapter extends MouseInputAdapter {
+//
+//        // MouseMotionListener
+//
+//        @Override
+//        public void mouseDragged(final MouseEvent theEvent) {
+//
+//            myPencilPath.lineTo(theEvent.getX(), theEvent.getY());
+//
+//            repaint();
+//        }
+//        // MouseListener
+//        @Override
+//        public void mousePressed(final MouseEvent theEvent) {
+//            myPencilPath.moveTo(theEvent.getX(), theEvent.getY());
+//            repaint();
+//        }
+//
+//    }
+    /**
+     * This is an inner class that makes the Line tool.
+     * @author Anh Nguyen
+     * @version 1.1
+     */
+    class MyLineMouseAdapter extends MouseInputAdapter {
+        
+        
+        private Point2D myStartPoint;
+        
+        private Point2D myMiddlePoint;
+        
+        private Point2D myEndPoint;
+        
+        //MouseMotionListener
+        @Override
+        public void mouseDragged(final MouseEvent theEvent) {
+            myMiddlePoint = theEvent.getPoint();
+            myLine.setLine(myStartPoint, myMiddlePoint);
+
+
+            repaint();
+        }
+        //MouseListener
+        @Override
+        public void mousePressed(final MouseEvent theEvent) {
+            
+            myStartPoint = theEvent.getPoint();
+         
+        }
+        
+        @Override
+        public void mouseReleased(final MouseEvent theEvent) {
+            
+            myEndPoint = theEvent.getPoint();
+            myLine.setLine(myStartPoint, myEndPoint);
+            
+            repaint();
+            
+        }
+
+    }
+
+}

@@ -1,0 +1,47 @@
+
+package gui;
+
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Graphics;
+
+import javax.swing.Icon;
+
+/**
+ * This class implements Icon in order to create a custom icon for PowerPaint.
+ * 
+ * @author Anh Nguyen
+ * @version 1.0
+ */
+public class CustomIcon implements Icon {
+    
+//    public CustomIcon(Color theColor) {
+//        super();
+//    }
+//    
+    //Class Constant
+    /**
+     * This is a constant foe the size of the Icon in the menu.
+     */
+    private static final int ICON_SIZE = 5;
+
+    @Override
+    public void paintIcon(final Component theComponent, final Graphics theGraphics,
+                          final int theX, final int theY) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public int getIconWidth() {
+        // TODO Auto-generated method stub
+        return ICON_SIZE;
+    }
+
+    @Override
+    public int getIconHeight() {
+        // TODO Auto-generated method stub
+        return ICON_SIZE;
+    }
+
+}
